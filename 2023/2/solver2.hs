@@ -1,7 +1,7 @@
 import System.IO
 
 solver::String -> [Int] -> Int
-solver lineIn values = sum (listo (lines lineIn) values)
+solver lineIn values = sum (pawa (lines lineIn))
 
 lista::String -> [Int] -> [Int]   -- todo remove
 lista lineIn values = listo (lines lineIn) values
@@ -24,6 +24,12 @@ parseLine (x:y:xs) [r,g,b]
                            where abo = take 1 y
                                  val = read x ::Int
                                  killme = parseLine xs    --later
+
+power::[Int] -> Int
+power (a:b:c:_) = a*b*c
+
+pawa::[String] -> [Int]
+pawa listStr = [ power (parseLine (drop 2 (words x)) [0,0,0]) | x <- listStr]
 
 path = "input.txt"
 vals = [12,13,14]
