@@ -1,21 +1,36 @@
 import Data.Char
 import System.IO
 import Data.Typeable
-import Text.Regex as R
 import qualified Data.List as L
 
 readLine::[Char] -> [Char]
 readLine line = [x | x <- line, isDigit x]
 
-replaceAllIn :: String -> [(String, String)] -> String
-replaceAllIn = foldl (\acc (k, v) -> R.subRegex (R.mkRegex k) acc v)    -- problem being it detects in order of appearance on key
+key = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"] -- there's better ways to do this but we're under a time limit
 
-key = [("zero", "0"), ("one", "1"), ("two", "2"), ("three", "3"), ("four", "4"), ("five", "5"), ("six", "6"), ("seven", "7"), ("eight", "8"), ("nine", "9")] -- there's better ways to do this but we're under a time limit
+replaceInLine:: (String, [Int], [Int]) -> (String, [Int],[Int])
+replaceInLine ((x:xs), index, accumulator) = ("", [], [])
+
+{-
+x:xs
+check if x is element index in key for every element in key ( x == key[i][index[i]] )
+        if yes, increment in index ( index[i]++ )
+                if index[i] == key[i].length
+                        index[i] = 0
+                        accumulator++i
+        else, reset index (index[i] = 0)
+if isDigit x, accumulator ++ (read x::Int)
+do the same for xs
+-}
 
 
-addNumber::String -> String
-addNumber [] = ""
-addNumber (x:xs) = x : xs
+{-
+
+-}
+
+
+
+
 
 
 interpret :: [Char] -> [Char]
@@ -24,7 +39,7 @@ interpret line = (head y) : (last y) : []   -- it's weird that you'd need `: []`
 
 readLines:: String -> [Int]
 readLines lien = [read (interpret x) | x <- lion]
-                where lion = lines (replaceAllIn lien key)
+                where lion = lines (lien)
 
 path = "input.txt"
 
